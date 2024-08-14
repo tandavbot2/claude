@@ -43,7 +43,7 @@ To run the bot locally: python bot.py
 
 ### Heroku
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/tandavbot2/claude)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/tandavbot2/claude/)
 
 ### Docker
 
