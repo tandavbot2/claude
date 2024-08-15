@@ -9,7 +9,7 @@ class Config:
     API_HASH = os.getenv("API_HASH", "")
     BOT_TOKEN = os.getenv("BOT_TOKEN", "")
     FSUB = os.getenv("FSUB", "")
-    CHID = int(os.getenv("CHID", "-1002177395485"))
+    CHID = int(os.getenv("CHID", "-1002113391742"))
     SUDO = list(map(int, os.getenv("SUDO", "").split()))
     MONGO_URI = os.getenv("MONGO_URI", "")
     
