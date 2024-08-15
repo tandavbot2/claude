@@ -84,35 +84,31 @@ async def start(_, m: Message):
         logger.info(f"User {m.from_user.id} is starting the bot.")
         logger.info(f"Trying to access chat with ID {cfg.CHID}")
 
+        # Attempt to get the chat member status to confirm bot access
         chat_member = await app.get_chat_member(cfg.CHID, m.from_user.id)
-        logger.info(f"Chat member fetched successfully: {chat_member}")
+        logger.info(f"User status in chat: {chat_member.status}")
 
         if m.chat.type == enums.ChatType.PRIVATE:
-            # Normal processing logic
             keyboard = InlineKeyboardMarkup([
                 [InlineKeyboardButton("🗯 Channel", url="https://t.me/TandavBots"),
                  InlineKeyboardButton("💬 Support", url="https://t.me/TandavBots_Support")]
             ])
             add_user(m.from_user.id)
             await m.reply_photo("https://graph.org/file/d57d6f83abb6b8d0efb02.jpg", 
-                                caption=f"**🦊 Hello {m.from_user.mention}!\nI'm an auto-approve [Admin Join Requests]({m.chat.title}) Bot.\nI can approve users in Groups/Channels. Add me to your chat and promote me to admin with add members permission.\n\n__Powered By : @TandavBots __**", 
+                                caption=f"**🦊 Hello {m.from_user.mention}! ...", 
                                 reply_markup=keyboard)
-
         elif m.chat.type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
-            # Handle group start command
             keyboard = InlineKeyboardMarkup([[
                 InlineKeyboardButton("💁‍♂️ Start me private 💁‍♂️", url="https://t.me/autoaccept_requesttb_bot")
             ]])
             add_group(m.chat.id)
             await m.reply_text(f"**🦊 Hello {m.from_user.first_name}!\nWrite me private for more details**", reply_markup=keyboard)
-
-        logger.info(f"{m.from_user.first_name} has successfully started your bot!")
-
     except UserNotParticipant:
         key = InlineKeyboardMarkup([[InlineKeyboardButton("🍀 Check Again 🍀", "chk")]])
         await m.reply_text(f"**⚠️ Access Denied! ⚠️\n\nPlease join @{cfg.FSUB} to use me. If you joined, click the check again button to confirm.**", reply_markup=key)
     except Exception as err:
         logger.error(f"Error in start function: {err}")
+        await m.reply_text(f"An error occurred: {err}")
 
 @app.on_callback_query(filters.regex("chk"))
 async def chk(_, cb: CallbackQuery):
